@@ -1,0 +1,38 @@
+package ar.edu.unlam.pb2;
+
+public class TarjetaDeCredito extends Tarjeta{
+
+	private Double lIMITE_COMPRA_EN_PESOS=0.0;
+	private Double lIMITE_DE_COMPRA_EN_DOLARES=0.0;
+	
+	public TarjetaDeCredito(Long nUMERO_ESPERADO, String tITULAR_ESPERADO, String fECHA_DE_VENCIMIENTO_ESPERADO,
+			Integer cODIGO_DE_SEGURIDAD_ESPERADO, Double lIMITE_COMPRA_EN_PESOS, Double lIMITE_DE_COMPRA_EN_DOLARES) {
+		super(nUMERO_ESPERADO,tITULAR_ESPERADO,fECHA_DE_VENCIMIENTO_ESPERADO,cODIGO_DE_SEGURIDAD_ESPERADO);
+		this.lIMITE_COMPRA_EN_PESOS=lIMITE_COMPRA_EN_PESOS;
+		this.lIMITE_DE_COMPRA_EN_DOLARES=lIMITE_DE_COMPRA_EN_DOLARES;
+	}
+
+	public Double getlIMITE_COMPRA_EN_PESOS() {
+		return lIMITE_COMPRA_EN_PESOS;
+	}
+
+	public void setlIMITE_COMPRA_EN_PESOS(Double lIMITE_COMPRA_EN_PESOS) {
+		this.lIMITE_COMPRA_EN_PESOS = lIMITE_COMPRA_EN_PESOS;
+	}
+
+	public Double getlIMITE_DE_COMPRA_EN_DOLARES() {
+		return lIMITE_DE_COMPRA_EN_DOLARES;
+	}
+
+	public void setlIMITE_DE_COMPRA_EN_DOLARES(Double lIMITE_DE_COMPRA_EN_DOLARES) {
+		this.lIMITE_DE_COMPRA_EN_DOLARES = lIMITE_DE_COMPRA_EN_DOLARES;
+	}
+
+
+	@Override
+	public void pagar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
