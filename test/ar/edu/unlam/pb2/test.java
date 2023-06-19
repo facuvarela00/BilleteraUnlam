@@ -68,9 +68,6 @@ public class test {
 		assertEquals(ENTIDAD_ESPERADA, cuentaBancaria.geteNTIDAD_ESPERADA());
 		assertEquals(TITULAR_ESPERADO, cuentaBancaria.gettITULAR_ESPERADO());
 	}
-}
-	
-	/*
 	
 	@Test
 	public void queSePuedaCrearUnaCuentaVirtual() throws CVUInvalidoException{
@@ -80,12 +77,12 @@ public class test {
 		final String TITULAR_ESPERADO = "Leticia Bridgeton";
 		
 		// Ejecuci�n
-		Transferible cuentaVirtual = new CuentaVirtual(CVU_ESPERADO, ENTIDAD_ESPERADA, TITULAR_ESPERADO);
-		
+		Cuenta cuentaVirtual = new CuentaVirtual(CVU_ESPERADO, ENTIDAD_ESPERADA, TITULAR_ESPERADO);
+		assertTrue(((CuentaVirtual) cuentaVirtual).CVUValido(CVU_ESPERADO));
 		// Verificaci�n
-		assertEquals(CVU_ESPERADO, cuentaVirtual.getCvu());
-		assertEquals(ENTIDAD_ESPERADA, cuentaVirtual.getEntidad());
-		assertEquals(TITULAR_ESPERADO, cuentaVirtual.getTitular());
+		assertEquals(CVU_ESPERADO, ((CuentaVirtual) cuentaVirtual).getCVU_ESPERADO());
+		assertEquals(ENTIDAD_ESPERADA, cuentaVirtual.geteNTIDAD_ESPERADA());
+		assertEquals(TITULAR_ESPERADO, cuentaVirtual.gettITULAR_ESPERADO());
 	}
 	
 	@Test
@@ -96,10 +93,10 @@ public class test {
 		
 		// Ejecuci�n
 		Comercio elAlmacen = new Comercio(CUIT_ESPERADO, NOMBRE_ESPERADO);
-		
+		assertTrue(elAlmacen.CUITValido(CUIT_ESPERADO));	
 		// Verificaci�n
-		assertEquals(NOMBRE_ESPERADO, elAlmacen.getNomNbre());
-		assertEquals(NOMBRE_ESPERADO, elAlmacen.getCuit());
+		assertEquals(NOMBRE_ESPERADO, elAlmacen.getnOMBRE_ESPERADO());
+		assertEquals(CUIT_ESPERADO, elAlmacen.getcUIT_ESPERADO());
 	}
 	
 	@Test
@@ -112,8 +109,8 @@ public class test {
 		Consumidor nuevo = new Consumidor(DNI_ESPERADO, NOMBRE_ESPERADO);
 		
 		// Verificaci�n
-		assertEquals(NOMBRE_ESPERADO, elAlmacen.getNomNbre());
-		assertEquals(NOMBRE_ESPERADO, elAlmacen.getCuit());
+		assertEquals(NOMBRE_ESPERADO, nuevo.getnOMBRE_ESPERADO());
+		assertEquals(DNI_ESPERADO, nuevo.getdNI_ESPERADO());
 	}
 	
 	@Test
@@ -129,7 +126,8 @@ public class test {
 		mataGalan.agregarComercio(new Comercio(30215654124L, "Panader�a"));
 		
 		// Verificaci�n
-		assertEquals(CANTIDAD_DE_COMERCIOS_ESPERADOS, billetera.getCantidadDeComercios());
+		assertEquals(CANTIDAD_DE_COMERCIOS_ESPERADOS, mataGalan.getCantidadDeComercios());
+		
 	}
 	
 	@Test
@@ -140,32 +138,37 @@ public class test {
 		// Ejecuci�n
 		Billetera mataGalan = new Billetera("Bna+");
 		
-		mataGalan.agregarConsumidor(Consumidor(27541231, "Luis Gomez");
-		mataGalan.agregarConsumidor(Consumidor(27541231, "Luis Gomez");
-		mataGalan.agregarConsumidor(Consumidor(36541231, "Sofia Molina");
+		mataGalan.agregarConsumidor(new Consumidor(27541231, "Luis Gomez"));
+		mataGalan.agregarConsumidor(new Consumidor(27541231, "Luis Gomez"));
+		mataGalan.agregarConsumidor(new Consumidor(36541231, "Sofia Molina"));
 		
 		// Verificaci�n
 		assertEquals(CANTIDAD_DE_CONSUMIDORES_ESPERADOS, mataGalan.getCantidadDeConsumidores());
 	}
 	
 	@Test
-	public void queSePuedanAgregarDistintosMediosDePagoALaBilleteraDeUnConsumidor() throws NumeroDeTarjetaInvalidoException, CBUInvalidoException, CVUInvalidoException, NoCoincideTitularException{
+	public void queSePuedanAgregarDistintosMediosDePagoALaBilleteraDeUnConsumidor() throws NumeroDeTarjetaInvalidoException, NumeroDeCBUInvalidoException, CVUInvalidoException, NoCoincideTitularException{
 		// Preparaci�n 
 		final Integer CANTIDAD_DE_MEDIOS_EN_LA_BILLETERA_ESPERADOS = 4;
 		
 		// Ejecuci�n
 		Billetera mataGalan = new Billetera("MercadoPago");
-		mataGalan.agregarConsumidor(new Consumidor(27541231, "Luis Gomez");
-		
-		mataGalan.agregarMedioDePago(27541231, new TarjetaDeDebito(48332562153254623L, "Luis Gomez", "10/10/2026", 265));
-		mataGalan.agregarMedioDePago(27541231, new TarjetaDeDebito(48332562153254623L, "Luis Gomez", "10/10/2026", 312));
-		mataGalan.agregarMedioDePago(27541231, new TarjetaDeCredito(5423542385612354L, "Luis Gomez", "10/10/2026", 153));
-		mataGalan.agregarMedioDePago(27541231, new CuentaBancaria("01702046600000087865", "Naci�n", "Luis Gomez"));
-		mataGalan.agregarMedioDePago(27541231, new CuentaVirtual("0000003100036521571806", "Mercado Pago", "Luis Gomez"));
-		
+		mataGalan.agregarConsumidor(new Consumidor(27541231, "Luis Gomez"));
+ 
+		mataGalan.agregarMedioDePago1(27541231, new TarjetaDeDebito(48332562153254623L, "Luis Gomez", "10/10/2026", 265));
+		mataGalan.agregarMedioDePago1(27541231, new TarjetaDeDebito(48332562153254623L, "Luis Gomez", "10/10/2026", 312));
+		mataGalan.agregarMedioDePago1(27541231, new TarjetaDeCredito(5423542385612354L, "Luis Gomez", "10/10/2026", 153));
+		mataGalan.agregarMedioDePago1(27541231, new CuentaBancaria("01702046600000087865", "Naci�n", "Luis Gomez"));
+		mataGalan.agregarMedioDePago1(27541231, new CuentaVirtual("0000003100036521571806", "Mercado Pago", "Luis Gomez"));
+		System.out.println("Cant: "+  mataGalan.getCantidadDeMediosDePago());
 		// Verificaci�n
-		assertEquals(CANTIDAD_DE_MEDIOS_EN_LA_BILLETERA_ESPERADOS, billetera.getCantidadDeMediosDePago(27541231));
+		System.out.println("Cant: "+  mataGalan.getCantidadDeMediosDePago(27541231));
+		assertEquals(CANTIDAD_DE_MEDIOS_EN_LA_BILLETERA_ESPERADOS, mataGalan.getCantidadDeMediosDePago(27541231));
 	}
+	
+}
+	
+	/*
 	
 	@Test
 	public void queSePuedaPagarConUnaTarjetaDeCredito() throws NumeroDeTarjetaInvalidoException, CBUInvalidoException, CVUInvalidoException, ExcedeLimiteDeCompraException{
