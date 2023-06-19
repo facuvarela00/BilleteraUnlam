@@ -1,5 +1,7 @@
 package ar.edu.unlam.pb2;
 
+import java.util.Objects;
+
 public class CuentaBancaria extends Cuenta {
 
 	private String cBU_ESPERADO="";
@@ -37,4 +39,22 @@ public class CuentaBancaria extends Cuenta {
 		this.cBU_ESPERADO = cBU_ESPERADO;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(cBU_ESPERADO);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CuentaBancaria other = (CuentaBancaria) obj;
+		return Objects.equals(cBU_ESPERADO, other.cBU_ESPERADO);
+	}
+
+	
 }

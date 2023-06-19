@@ -1,6 +1,8 @@
 package ar.edu.unlam.pb2;
 
-import static org.junit.Assert.assertTrue;
+import java.util.Objects;
+
+//import static org.junit.Assert.assertTrue;
 
 import ar.edu.unlam.pb2.NumeroDeTarjetaInvalidoException;
 
@@ -11,12 +13,18 @@ public abstract class Tarjeta implements Pagadora {
 	private Integer cODIGO_DE_SEGURIDAD_ESPERADO=0;
 	
 	public Tarjeta (Long nUMERO_ESPERADO, String tITULAR_ESPERADO, String fECHA_DE_VENCIMIENTO_ESPERADO,
-	Integer cODIGO_DE_SEGURIDAD_ESPERADO) {
+	Integer cODIGO_DE_SEGURIDAD_ESPERADO) throws NumeroDeTarjetaInvalidoException {
 		
 		this.nUMERO_ESPERADO=nUMERO_ESPERADO;
 		this.tITULAR_ESPERADO=tITULAR_ESPERADO;
 		this.fECHA_DE_VENCIMIENTO_ESPERADO=fECHA_DE_VENCIMIENTO_ESPERADO;
 		this.cODIGO_DE_SEGURIDAD_ESPERADO=cODIGO_DE_SEGURIDAD_ESPERADO;
+		
+		try {
+			numeroValido(nUMERO_ESPERADO);
+		} catch (NumeroDeTarjetaInvalidoException e) {
+			throw new NumeroDeTarjetaInvalidoException(e.getMessage());
+		}
 	}
 
 	
@@ -29,7 +37,6 @@ public abstract class Tarjeta implements Pagadora {
 			return true;
 		}
 		else if(numero.length()!=16){
-			setnUMERO_ESPERADO(0L);
 			throw new NumeroDeTarjetaInvalidoException("El numero de tarjeta " + xd + " es invalido.");
 			
 		}
@@ -68,6 +75,26 @@ public abstract class Tarjeta implements Pagadora {
 	public void setcODIGO_DE_SEGURIDAD_ESPERADO(Integer cODIGO_DE_SEGURIDAD_ESPERADO) {
 		this.cODIGO_DE_SEGURIDAD_ESPERADO = cODIGO_DE_SEGURIDAD_ESPERADO;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nUMERO_ESPERADO);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tarjeta other = (Tarjeta) obj;
+		return Objects.equals(nUMERO_ESPERADO, other.nUMERO_ESPERADO);
+	}
+	
 	
 	
 }

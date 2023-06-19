@@ -10,13 +10,14 @@ public class Billetera {
 	private String nombre="";
 	private Set <Comercio> comercios;
 	private Set <Consumidor> consumidores;
-	private Map <Integer, Object> mediosDePago;
+	private Map <Integer, HashSet<Object>> mediosDePago;
+
 
 	public Billetera(String nombre) {
 		this.nombre=nombre;
 		comercios= new HashSet<Comercio>();
 		consumidores = new HashSet<Consumidor>();
-		mediosDePago = new TreeMap<Integer, Object>();
+		mediosDePago = new TreeMap<Integer, HashSet<Object>>();
 	}
 
 	public void agregarComercio(Comercio comercio) throws CuitInvalidoException {
@@ -39,36 +40,72 @@ public class Billetera {
 		return consumidores.size();
 	}
 
-	public void agregarMedioDePago(int key, Tarjeta tarjeta) {
 
-		if(tarjeta instanceof TarjetaDeCredito) {
-			mediosDePago.put(key, ((TarjetaDeCredito)tarjeta));
-		}else if(tarjeta instanceof TarjetaDeDebito) {
-			mediosDePago.put(key, ((TarjetaDeDebito)tarjeta));
-		}
-		
+	
+	public Map<Integer, HashSet<Object>> getMediosDePago() {
+		return mediosDePago;
 	}
 
-	public void agregarMedioDePago(int key, Cuenta cuenta) {
+	public void setMediosDePago(Map<Integer, HashSet<Object>> mediosDePago) {
+		this.mediosDePago = mediosDePago;
+	}
 
-		if(cuenta instanceof CuentaVirtual) {
-			mediosDePago.put(key, ((CuentaVirtual)cuenta));
-		}else if(cuenta instanceof CuentaBancaria){
-			mediosDePago.put(key, ((CuentaBancaria)cuenta));
+	public Consumidor buscarConsumidor(Integer dni) {
+		Consumidor consumidorNuevo=null;
+		
+		for (Consumidor consumidor : consumidores) {
+			if(consumidor.getdNI_ESPERADO().equals(dni)) {
+				consumidorNuevo=consumidor;
+			}	
 		}
 		
+		return consumidorNuevo;
 	}
 	
-	public void agregarMedioDePago1(Integer key, Object a) {
-		Consumidor nuevo = null;
-		if(a instanceof CuentaVirtual) {
-			mediosDePago.put(key, ((CuentaVirtual)a));
-		}else if(a instanceof CuentaBancaria){
-			mediosDePago.put(key, ((CuentaBancaria)a));
-		}else if(a instanceof TarjetaDeCredito) {
-			mediosDePago.put(key, ((TarjetaDeCredito)a));
-		}else if(a instanceof TarjetaDeDebito) {
-			mediosDePago.put(key, ((TarjetaDeDebito)a));
+	public Boolean queCoincidanTitulares(Consumidor consumidor, Object medioDePago) {
+	
+		String nombre=consumidor.getnOMBRE_ESPERADO();
+
+		if (medioDePago instanceof Cuenta) {
+			if(((Cuenta)medioDePago).gettITULAR_ESPERADO().equals(nombre)) {
+				return true;
+			}
+		}else if (medioDePago instanceof Tarjeta) {
+			if(((Tarjeta)medioDePago).gettITULAR_ESPERADO().equals(nombre)) { //ENTRA ACA
+				return true;
+			}
+		}
+		System.out.println(nombre);
+		return false;	
+	}
+	
+	public void agregarMedioDePago(Integer key, Object medioDePago) {
+
+		Consumidor nuevo=buscarConsumidor(key); //DEVUELVE USUARIO
+
+		Object mp=null;
+				
+		if(medioDePago instanceof CuentaVirtual) {
+			mp=((CuentaVirtual)medioDePago);
+		}
+		else if(medioDePago instanceof CuentaBancaria){
+			mp=((CuentaBancaria)medioDePago);
+		}
+		else if(medioDePago instanceof TarjetaDeCredito) {
+			mp=((TarjetaDeCredito)medioDePago);
+		}
+		else if(medioDePago instanceof TarjetaDeDebito) {
+			mp=((TarjetaDeDebito)medioDePago);
+		}
+		
+		
+		if(nuevo!=null&&queCoincidanTitulares(nuevo,mp)&&getMediosDePago().containsKey(key)==true) {
+			mediosDePago.get(key).add(mp);
+		}
+		else if(nuevo!=null&&queCoincidanTitulares(nuevo,mp)&&getMediosDePago().containsKey(key)==false) {
+			HashSet mediosDePagoLocales= new HashSet<Object>();
+			mediosDePagoLocales.add(mp);
+			mediosDePago.put(key, mediosDePagoLocales);
 		}
 		
 	}
@@ -78,13 +115,13 @@ public class Billetera {
 	}
 
 	public Integer getCantidadDeMediosDePago(Integer i) {
-		Integer a=0;
-		for (Map.Entry<Integer, Object> entry : mediosDePago.entrySet()) {
-			if(entry.getKey()==i) {
-				a++;
+		if(mediosDePago.containsKey(i)) {
+			return mediosDePago.get(i).size();	
 			}
-		}
-		return a;
+		
+		return 0;
 	}
+	
+	
 
 }
