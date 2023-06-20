@@ -156,10 +156,10 @@ public class test {
 		
 		mataGalan.agregarConsumidor(new Consumidor(27541231, "Luis Gomez"));
 		
-		mataGalan.agregarMedioDePago(27541231, new TarjetaDeDebito(483325621532534623L, "Luis Gomez", "10/10/2026", 265));
-		mataGalan.agregarMedioDePago(27541231, new TarjetaDeDebito(48332562152534623L, "Luis Gomez", "10/10/2026", 312));
+		mataGalan.agregarMedioDePago(27541231, new TarjetaDeDebito(5423542385612353L, "Luis Gomez", "10/10/2026", 265));
+		mataGalan.agregarMedioDePago(27541231, new TarjetaDeDebito(5423542385612353L, "Luis Gomez", "10/10/2026", 312));
 		mataGalan.agregarMedioDePago(27541231, new TarjetaDeCredito(5423542385612354L, "Luis Gomez", "10/10/2026", 153));
-		mataGalan.agregarMedioDePago(27541231, new CuentaBancaria("01702046600000087865", "Naci�n", "Luis Gomez"));
+		mataGalan.agregarMedioDePago(27541231, new CuentaBancaria("12346578912345678900", "Naci�n", "Luis Gomez"));
 		mataGalan.agregarMedioDePago(27541231, new CuentaVirtual("0000003100036521571806", "Mercado Pago", "Luis Gomez"));
 		
 		// Verificaci�n

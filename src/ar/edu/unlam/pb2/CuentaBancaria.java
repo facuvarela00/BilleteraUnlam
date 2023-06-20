@@ -6,9 +6,18 @@ public class CuentaBancaria extends Cuenta {
 
 	private String cBU_ESPERADO="";
 	
-	public CuentaBancaria(String cBU_ESPERADO, String eNTIDAD_ESPERADA, String tITULAR_ESPERADO) {
+	public CuentaBancaria(String cBU_ESPERADO, String eNTIDAD_ESPERADA, String tITULAR_ESPERADO) throws NumeroDeCBUInvalidoException {
 		super(eNTIDAD_ESPERADA,tITULAR_ESPERADO);
+		
 		this.cBU_ESPERADO=cBU_ESPERADO;
+		
+		try {
+			CBUValido(cBU_ESPERADO);
+		} catch (NumeroDeCBUInvalidoException e) {
+			// TODO Auto-generated catch block
+			throw new NumeroDeCBUInvalidoException (e.getMessage());
+		}
+		
 	}
 
 	@Override
@@ -24,7 +33,7 @@ public class CuentaBancaria extends Cuenta {
 			return true;
 		}
 		else if(cBU_ESPERADO.length()!=20){
-			setcBU_ESPERADO("");
+			//setcBU_ESPERADO("");
 			throw new NumeroDeCBUInvalidoException("El numero de CBU " + xd + " es invalido.");
 			
 		}
